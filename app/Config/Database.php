@@ -4,31 +4,17 @@ namespace Config;
 
 use CodeIgniter\Database\Config;
 
-/**
- * Database Configuration
- */
 class Database extends Config
 {
-    /**
-     * The directory that holds the Migrations
-     * and Seeds directories.
-     */
     public string $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
-
-    /**
-     * The default database group to use if none is specified.
-     */
     public string $defaultGroup = 'default';
 
-    /**
-     * The default database connection setup for Render & Aiven MySQL.
-     */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => '',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => 'mysql-2c6924c7-fit-4e4b.c.aivencloud.com',
+        'username'     => 'avnadmin',
+        'password'     => 'AVNS_a7Zm7HChT9NX1DHCy5K',
+        'database'     => 'defaultdb',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -36,17 +22,14 @@ class Database extends Config
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_general_ci',
         'swapPre'      => '',
-        'encrypt'      => true, // Required for Aiven SSL connections
+        'encrypt'      => true,
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => 16113,
         'numberNative' => false,
     ];
 
-    /**
-     * This database group is used for system testing.
-     */
     public array $tests = [
         'DSN'         => '',
         'hostname'    => '127.0.0.1',
@@ -73,27 +56,23 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Dynamically assign connection settings from environment variables
-        if (env('database.default.hostname')) {
-            $this->default['hostname'] = env('database.default.hostname');
+        // Override from environment if present
+        if (getenv('database.default.hostname')) {
+            $this->default['hostname'] = getenv('database.default.hostname');
         }
-        if (env('database.default.database')) {
-            $this->default['database'] = env('database.default.database');
+        if (getenv('database.default.database')) {
+            $this->default['database'] = getenv('database.default.database');
         }
-        if (env('database.default.username')) {
-            $this->default['username'] = env('database.default.username');
+        if (getenv('database.default.username')) {
+            $this->default['username'] = getenv('database.default.username');
         }
-        if (env('database.default.password')) {
-            $this->default['password'] = env('database.default.password');
+        if (getenv('database.default.password')) {
+            $this->default['password'] = getenv('database.default.password');
         }
-        if (env('database.default.port')) {
-            $this->default['port'] = (int) env('database.default.port');
-        }
-        if (env('database.default.DBDriver')) {
-            $this->default['DBDriver'] = env('database.default.DBDriver');
+        if (getenv('database.default.port')) {
+            $this->default['port'] = (int) getenv('database.default.port');
         }
 
-        // Ensure tests group runs in testing environment
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
