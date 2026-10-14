@@ -56,21 +56,27 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Override from environment if present
-        if (getenv('database.default.hostname')) {
-            $this->default['hostname'] = getenv('database.default.hostname');
+        // 1. Force trimmed string inputs from environment variables if present
+        $envHost = trim((string) getenv('database.default.hostname'));
+        $envUser = trim((string) getenv('database.default.username'));
+        $envPass = trim((string) getenv('database.default.password'));
+        $envDb   = trim((string) getenv('database.default.database'));
+        $envPort = (int) getenv('database.default.port');
+
+        if (!empty($envHost)) {
+            $this->default['hostname'] = $envHost;
         }
-        if (getenv('database.default.database')) {
-            $this->default['database'] = getenv('database.default.database');
+        if (!empty($envUser)) {
+            $this->default['username'] = $envUser;
         }
-        if (getenv('database.default.username')) {
-            $this->default['username'] = getenv('database.default.username');
+        if (!empty($envPass)) {
+            $this->default['password'] = $envPass;
         }
-        if (getenv('database.default.password')) {
-            $this->default['password'] = getenv('database.default.password');
+        if (!empty($envDb)) {
+            $this->default['database'] = $envDb;
         }
-        if (getenv('database.default.port')) {
-            $this->default['port'] = (int) getenv('database.default.port');
+        if ($envPort > 0) {
+            $this->default['port'] = $envPort;
         }
 
         if (ENVIRONMENT === 'testing') {
