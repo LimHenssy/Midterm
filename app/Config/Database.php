@@ -13,7 +13,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'saipokemoncenter-fit-4e4b.j.aivencloud.com',
         'username'     => 'avnadmin',
-        'password'     => 'AVNS_U8F3tjsYK_yJl12g0qL',
+        'password'     => 'AVNS_U8F3tjsYK_yJlt2g0qL',
         'database'     => 'defaultdb',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
