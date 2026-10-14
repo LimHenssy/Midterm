@@ -22,7 +22,9 @@ class Database extends Config
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_general_ci',
         'swapPre'      => '',
-        'encrypt'      => true,
+        'encrypt'      => [
+            'ssl_verify' => false, // Prevents self-signed cert verification failure on Render containers
+        ],
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
@@ -56,6 +58,7 @@ class Database extends Config
     {
         parent::__construct();
 
+        // Ensure no environment variables override these credentials at runtime
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
