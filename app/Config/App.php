@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://saipokemoncenter.onrender.com/';
+    public string $baseURL = 'https://saipokecenter.onrender.com/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -164,33 +164,41 @@ class App extends BaseConfig
      * Reverse Proxy IPs
      * --------------------------------------------------------------------------
      *
-     * If your server is behind a reverse proxy, you must whitelist the proxy
-     * IP addresses from which CodeIgniter should trust headers such as
-     * X-Forwarded-For or Client-IP in order to properly identify
-     * the visitor's IP address.
+     * Maps proxy IP ranges to the corresponding HTTP header name.
+     * Uses CIDR notation (0.0.0.0/0) to trust Render's load balancer.
      *
-     * Set to '*' to trust Render's reverse proxy load balancers.
-     *
-     * @var array<string, string>|string|list<string>
+     * @var array<string, string>
      */
     public array $proxyIPs = [
         '0.0.0.0/0' => 'X-Forwarded-For',
     ];
+
     /**
      * --------------------------------------------------------------------------
      * Content Security Policy
      * --------------------------------------------------------------------------
      *
      * Enables the Response's Content Secure Policy to restrict the sources that
-     * can be used for images, scripts, CSS files, audio, video, etc. If enabled,
-     * the Response object will populate default values for the policy from the
-     * `ContentSecurityPolicy.php` file. Controllers can always add to those
-     * restrictions at run time.
-     *
-     * For a better understanding of CSP, see these documents:
-     *
-     * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
-     * @see http://www.w3.org/TR/CSP/
+     * can be used for images, scripts, CSS files, audio, video, etc.
      */
     public bool $CSPEnabled = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Dynamic Base URL Constructor
+     * --------------------------------------------------------------------------
+     *
+     * Forces CodeIgniter to construct absolute URLs matching the active Render
+     * hostname instead of falling back to localhost.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+            $this->baseURL = 'https://' .$_SERVER['HTTP_X_FORWARDED_HOST'] . '/';
+        } elseif (isset($_SERVER['HTTP_HOST']) &&$_SERVER['HTTP_HOST'] !== 'localhost') {
+            $this->baseURL = 'https://' .$_SERVER['HTTP_HOST'] . '/';
+        }
+    }
 }
