@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://saipokemoncenter.onrender.com';
+    public string $baseURL = 'https://saipokecenter.onrender.com/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -25,7 +25,7 @@ class App extends BaseConfig
      * E.g.,
      * When your site URL ($baseURL) is 'http://example.com/', and your site
      * also accepts 'http://media.example.com/' and 'http://accounts.example.com/':
-     *     ['media.example.com', 'accounts.example.com']
+     *      ['media.example.com', 'accounts.example.com']
      *
      * @var list<string>
      */
@@ -40,7 +40,7 @@ class App extends BaseConfig
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
      */
-    public string $indexPage = 'index.php';
+    public string $indexPage = '';
 
     /**
      * --------------------------------------------------------------------------
@@ -173,10 +173,10 @@ class App extends BaseConfig
      * the HTTP header for the client IP address.
      *
      * Here are some examples:
-     *     [
-     *         '10.0.1.200'     => 'X-Forwarded-For',
-     *         '192.168.5.0/24' => 'X-Real-IP',
-     *     ]
+     *      [
+     *          '10.0.1.200'     => 'X-Forwarded-For',
+     *          '192.168.5.0/24' => 'X-Real-IP',
+     *      ]
      *
      * @var array<string, string>
      */
