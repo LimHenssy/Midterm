@@ -10,10 +10,10 @@ class Database extends Config
     public string $defaultGroup = 'default';
 
     public array $default = [
-        'DSN'          => 'gdb:mysql://avnadmin:AVNS_a7Zm7HChT9NX1DHCy5K@mysql-2c6924c7-fit-4e4b.c.aivencloud.com:16113/defaultdb?sslmode=verify-ca',
-        'hostname'     => 'mysql-2c6924c7-fit-4e4b.c.aivencloud.com',
+        'DSN'          => '',
+        'hostname'     => 'saipokemoncenter-fit-4e4b.j.aivencloud.com',
         'username'     => 'avnadmin',
-        'password'     => 'AVNS_a7Zm7HChT9NX1DHCy5K',
+        'password'     => 'AVNS_U8F3tjsYK_yJl12g0qL',
         'database'     => 'defaultdb',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
@@ -55,24 +55,6 @@ class Database extends Config
     public function __construct()
     {
         parent::__construct();
-
-        // 1. Check if environment variables exist
-        $host = getenv('database.default.hostname') ?: $_ENV['database.default.hostname'] ?? null;
-        $user = getenv('database.default.username') ?: $_ENV['database.default.username'] ?? null;
-        $pass = getenv('database.default.password') ?: $_ENV['database.default.password'] ?? null;
-        $db   = getenv('database.default.database') ?: $_ENV['database.default.database'] ?? null;
-        $port = getenv('database.default.port')     ?: $_ENV['database.default.port']     ?? null;
-
-        if ($host) $this->default['hostname'] = trim($host);
-        if ($user) $this->default['username'] = trim($user);
-        if ($pass) $this->default['password'] = trim($pass);
-        if ($db)   $this->default['database'] = trim($db);
-        if ($port) $this->default['port']     = (int) trim($port);
-
-        // 2. Clear DSN string if overrides exist
-        if ($host || $user || $pass || $db) {
-            $this->default['DSN'] = '';
-        }
 
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
