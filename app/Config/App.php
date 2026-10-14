@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://saipokecenter.onrender.com/';
+    public string $baseURL = 'https://saipokemoncenter.onrender.com/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -169,18 +169,11 @@ class App extends BaseConfig
      * X-Forwarded-For or Client-IP in order to properly identify
      * the visitor's IP address.
      *
-     * You need to set a proxy IP address or IP address with subnets and
-     * the HTTP header for the client IP address.
+     * Set to '*' to trust Render's reverse proxy load balancers.
      *
-     * Here are some examples:
-     *      [
-     *          '10.0.1.200'     => 'X-Forwarded-For',
-     *          '192.168.5.0/24' => 'X-Real-IP',
-     *      ]
-     *
-     * @var array<string, string>
+     * @var array<string, string>|string|list<string>
      */
-    public array $proxyIPs = [];
+    public array $proxyIPs = ['*'];
 
     /**
      * --------------------------------------------------------------------------
